@@ -1,0 +1,10 @@
+# brew "asdf"
+brew "jq"
+brew "yq"
+brew "yj"
+brew "rg"
+brew "fd"
+brew "bat"
+# brew "starship"
+brew "tealdeer"
+

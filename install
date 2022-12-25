@@ -1,0 +1,48 @@
+#!/bin/bash
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+if [ -f /etc/apt/sources.list ]; then
+    echo
+    echo '📦 Updating apt package lists ...'
+    sudo apt-get update
+
+    echo
+    echo '📦 Installing apt packages ...'
+    grep -v '^#' ./apt-packages.txt | xargs sudo apt-get install -y
+fi
+
+echo
+echo '📦 Installing Brew packages ...'
+/home/linuxbrew/.linuxbrew/bin/brew bundle --no-lock --quiet
+
+echo
+echo '🔗 Linking dotfiles ...'
+function link_dotfile() {
+    src="$(realpath "$0")"
+    dst="$HOME/$(realpath --relative-to=./dotfiles "$0")"
+    echo "Linking $dst"
+    mkdir -p "$(dirname "$dst")"
+    ln -fs "$src" "$dst"
+}
+export -f link_dotfile
+find ./dotfiles -type f -exec bash -c 'link_dotfile "$0"' {} \;
+
+echo
+echo '📄 Downloading global gitignore ...'
+wget -qO ~/.gitignore_global 'https://raw.githubusercontent.com/github/gitignore/main/Global/Linux.gitignore'
+
+source ~/.profile
+
+echo
+echo '🔌 Installing asdf plugins ...'
+(asdf plugin add nodejs 'https://github.com/asdf-vm/asdf-nodejs.git') || true
+(asdf plugin add python) || true
+
+echo
+echo '🔌 Installing asdf versions ...'
+xargs -a ~/.tool-versions -n2 asdf install
+
+echo
+echo '🎉 Done!'

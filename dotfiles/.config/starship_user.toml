@@ -1,0 +1,18 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[git_metrics]
+disabled = false
+
+[status]
+disabled = false
+symbol = "×"
+
+[sudo]
+disabled = false
+
+[time]
+disabled = false
+style = "dimmed"
+
+[os]
+disabled = false
