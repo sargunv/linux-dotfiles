@@ -1,0 +1,4 @@
+# Docs: https://dbrgn.github.io/tealdeer/config.html
+
+[updates]
+auto_update = true
