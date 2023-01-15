@@ -1,2 +1,5 @@
+java temurin-17.0.5+8
 nodejs lts
 python 3.11.1
+rust stable
+golang 1.19.5

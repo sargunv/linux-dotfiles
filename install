@@ -41,11 +41,17 @@ function install_asdf_plugin() {
     if ! asdf plugin list | grep -q "^$1$"; then
         echo "Installing $1"
         asdf plugin add "$@"
+    else
+        echo "Already installed $1"
     fi
 }
+install_asdf_plugin java
 install_asdf_plugin nodejs
 install_asdf_plugin python
+install_asdf_plugin rust
+install_asdf_plugin golang
 
+echo
 echo '🔌 Updating asdf plugins ...'
 asdf plugin update --all
 
