@@ -33,14 +33,12 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
+# ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# system completions
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion
@@ -49,10 +47,10 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# asdf completions
-if [ -f "$HOME/.asdf/completions/asdf.bash" ]; then
-    source "$HOME/.asdf/completions/asdf.bash"
-fi
+# brew completions
+for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+    [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+done
 
 # starship prompt
 jq -s '.[0] * .[1]' \

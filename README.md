@@ -7,9 +7,6 @@ Currently tested on Ubuntu under WSL2.
 Prereqs:
 
 - Homebrew
-- asdf (TODO get from brew)
-- Rust/Cargo (TODO get from brew?)
-- Starship (TODO get from brew)
 
 Usage:
 

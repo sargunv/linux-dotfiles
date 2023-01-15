@@ -37,12 +37,22 @@ source ~/.profile
 
 echo
 echo '🔌 Installing asdf plugins ...'
-(asdf plugin add nodejs 'https://github.com/asdf-vm/asdf-nodejs.git') || true
-(asdf plugin add python) || true
+function install_asdf_plugin() {
+    if ! asdf plugin list | grep -q "^$1$"; then
+        echo "Installing $1"
+        asdf plugin add "$@"
+    fi
+}
+install_asdf_plugin nodejs
+install_asdf_plugin python
+
+echo '🔌 Updating asdf plugins ...'
+asdf plugin update --all
 
 echo
 echo '🔌 Installing asdf versions ...'
-xargs -a ~/.tool-versions -n2 asdf install
+# try twice b/c https://github.com/asdf-vm/asdf-nodejs/pull/330
+xargs -a ~/.tool-versions -n2 asdf install || xargs -a ~/.tool-versions -n2 asdf install
 
 echo
 echo '🎉 Done!'
